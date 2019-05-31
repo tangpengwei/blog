@@ -162,7 +162,17 @@
 
 
                                             <span class="date text-grey ml-2">{$v.create_time}</span>
-                                            &nbsp;&nbsp;&nbsp; <i class="fa fa-thumbs-up">赞</i>
+
+
+                                            <div class="actions">
+                                                <a data-id="{$v.id}" class="btn btn-xs ding {if ($v['ding'])} btn-warning {else/} btn-white {/if}"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                <span>{$v.ding}</span>
+                                            </div>
+
+
+
+
+
                                         </div>
                                         <!--<div class="text-right text-grey">-->
 
@@ -266,9 +276,9 @@
                 </div>
 
                 <div class="form-group">
-                    <form action="http://xuebuting.com/search.htm" id="search_form">
+                    <form action="/index/Index/search.html" method="post">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="关键词" name="keyword">
+                            <input type="text" class="form-control" placeholder="关键词" name="wd">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">搜索</button>
                             </div>
@@ -317,6 +327,46 @@
 <script src="/static/ui/library/um/umeditor.js"></script>
 <script>
     var ue = UM.getEditor('editor1');
+
+
+
+
+
+
+    $('.ding').click(function () {
+
+        var i = $(this);
+        var id = i.attr('data-id');
+
+        $.post('{:url("index/Index/ding")}', {id:id}, function (e) {
+            if (e.code) {
+                if (e.data) {
+                    //取消赞成功
+                    i.next().html(parseInt(i.next().html()) - 1);
+                    i.removeClass('btn-warning').addClass('btn-white');
+                }else{
+                    //点赞成功
+                    i.next().html(parseInt(i.next().html()) + 1);
+                    i.removeClass('btn-white').addClass('btn-warning');
+                }
+
+
+
+            }else {
+                alert(e.msg);
+            }
+        })
+
+    })
+
+
+
+
+
+
+
+
+
 </script>
 
 {/block}
