@@ -1,0 +1,110 @@
+
+{extend name="zzz/zzz" /}
+
+{block name='main'}
+
+<main id="body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="search.htm" id="form">
+
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="关键词" name="keyword" value="{$keyword}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="submit">搜索</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="range" value="1" checked=""> 主题贴
+                                </label>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link " href="./">
+                                    主题列表						</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-unstyled threadlist mb-0">
+
+
+                            {volist name="newList" id="vo"}
+
+                            <li class="media thread tap  " data-href="thread-7.htm" data-tid="7">
+
+                                <a rel="nofollow" target="_blank" href="user-4.htm" tabindex="-1" class="ml-1 mt-1 mr-3">
+                                    {if $vo.minthumb}
+                                    <img class="avatar-3" src="/{$list[0]['minthumb']}">
+                                    {else/}<img src="/static/image/lz.jpg" alt="" style="width: 34px;height: 34px">
+                                    {/if}
+                                </a>
+
+
+                                <div class="media-body">
+                                    <div class="subject break-all">
+
+
+
+
+                                        <a target="_blank" href="{:url('index/Index/centent',['id'=>$vo['id']])}">{$vo.title|raw}
+                                            <a href="forum-2-1.htm?tagids=3" class="badge badge-pill badge-secondary">原创</a>
+
+
+
+
+
+
+
+
+
+                                    </div>
+                                    <div class="d-flex justify-content-between small mt-1">
+                                        <div>
+
+                                            <span class="username text-grey mr-1  hidden-sm" uid="4">{$vo.author}</span>
+                                            <span class="date text-grey hidden-sm">{$vo.create_time|date='Y-m-d'}</span>
+
+
+
+                                            <!--<span>-->
+                                            <!--<span class="text-grey mx-2">←</span>-->
+                                            <!--<span class="username text-grey mr-1" uid="38">王质</span>-->
+                                            <!--<span class="text-grey">2月前</span>-->
+                                            <!--</span>-->
+
+                                        </div>
+                                        <div class="text-muted small">
+
+                                            <span class="ml-2 d-none"><i class="icon-eye"></i> 113</span>
+
+
+
+                                            <span class="ml-2"><i class="icon-comment-o"></i> 1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {/volist}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{/block}

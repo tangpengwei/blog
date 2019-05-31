@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <title>唐唐的博客</title>
+
+
+    <style>
+        table.nav_tag_list {
+            margin-bottom: 0.2rem;
+        }
+
+        table.nav_tag_list td {
+            padding: 0.3rem;
+        }
+
+        table.nav_tag_list td a {
+            margin-right: 0.2rem;
+        }
+
+        .nav_tag_list .active {
+            font-weight: normal
+        }
+
+        .tag_option {
+            border: 1px solid #bbb;
+            padding: 1px 10px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+        .tag_option:active, .tag_option.active {
+            border: 1px solid #000;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/xuebutingcssandjs/css/bootstrap.css">
+
+
+    <link rel="stylesheet" href="/static/xuebutingcssandjs/css/bootstrap-bbs.css">
+
+
+    <link href="/static/xuebutingcssandjs/css/editormd.min.css" type="text/css" rel="stylesheet">
+
+
+    {block name='css'}{/block}
+
+
+    <style>
+        /*
+        box-shadow: 0 0 5px red;
+        */
+        @keyframes xndigest {
+            0% {
+                color: red;
+                text-shadow: 0 0 3px #FF8D8D;
+            }
+            20% {
+                color: orange;
+                text-shadow: 0 0 3px #FFE1AD;
+            }
+            40% {
+                color: green;
+                text-shadow: 0 0 3px #B3FFAF;
+            }
+            65% {
+                color: blue;
+                text-shadow: 0 0 3px #AFE4FF;
+            }
+            80% {
+                color: purple;
+                text-shadow: 0 0 3px #FFC9F3;
+            }
+            100% {
+                color: red;
+                text-shadow: 0 0 3px #FF8D8D;
+            }
+        }
+
+        /*水晶闪烁效果 占内存*/
+        i.icon-diamond.flash {
+            color: #D53D38; /*animation: xndigest 5s linear infinite;*/
+        }
+
+        i.icon-digest-1 {
+            text-shadow: 0 0 3px #AFE4FF;
+        }
+
+        i.icon-digest-2 {
+            text-shadow: 0 0 3px #FFF177;
+        }
+
+        i.icon-digest-3 {
+            text-shadow: 0 0 3px #FF8D8D;
+        }
+
+        .icon-digest-1:before {
+            content: "\f219";
+            color: #5BC0DE;
+        }
+
+        /* "\f0a5" */
+        .icon-digest-2:before {
+            content: "\f219";
+            color: #ECA541;
+        }
+
+        .icon-digest-3:before {
+            content: "\f219";
+            color: #D53D38;
+        }
+
+        .icon-digest-3:afteer {
+            content: "精";
+            color: #D53D38;
+        }
+    </style>
+    <style>
+        /*
+        .toggle_more {
+            max-height: 100px;
+        }
+        */
+        .update_log_list a.update_log_history,
+        .update_log_list a.update_log_delete {
+            display: none;
+        }
+
+        .update_log_list > li:hover {
+            background: var(--gray-300);
+        }
+
+        .update_log_list > li:hover > a.update_log_history,
+        .update_log_list > li:hover > a.update_log_delete {
+            display: inline-block;
+        }
+
+    </style>
+
+    <link type="text/css" rel="stylesheet" href="/static/xuebutingcssandjs/css/codemirror.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/xuebutingcssandjs/css/dialog.css">
+    <link type="text/css" rel="stylesheet" href="/static/xuebutingcssandjs/css/matchesonscrollbar.css">
+    <script id="plugin-gmchina_xiuno_editormd-editormd-lib-codemirror-codemirror-min" type="text/javascript"
+            src="/static/xuebutingcssandjs/js/codemirror.min.js"></script>
+    <script id="plugin-gmchina_xiuno_editormd-editormd-lib-codemirror-modes-min" type="text/javascript"
+            src="/static/xuebutingcssandjs/js/modes.min.js"></script>
+    <script id="plugin-gmchina_xiuno_editormd-editormd-lib-codemirror-addons-min" type="text/javascript"
+            src="/static/xuebutingcssandjs/js/addons.min.js"></script>
+</head>
+
+<body>
+
+
+<header class="navbar navbar-expand-lg navbar-dark bg-dark" id="header">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav"
+                aria-controls="navbar_collapse" aria-expanded="false" aria-label="展开菜单">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <a class="navbar-brand text-truncate" href="">
+            <!--<img src="view/img/logo.png" class="logo-2">-->
+        </a>
+
+
+        <a class="navbar-brand hidden-lg" href="" aria-label="登录"> <i
+                class="icon-user icon"></i></a>
+
+
+        <div class="collapse navbar-collapse" id="nav">
+            <!-- 左侧：版块 -->
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item home active" fid="0" data-active="fid-0"><a class="nav-link" href="{:url('index/Index/index')}">
+                    <i class="icon-home d-md-none"></i> 首页</a></li>
+                {foreach $Info as $v}
+                <li class="nav-item" fid="1" data-active="fid-1">
+                    <a class="nav-link" href="{:url('index/Index/index',['id'=>$v['id']])}"><i class="icon-circle-o d-md-none"></i>
+                        {$v.name}</a>
+                </li>
+                {/foreach}
+            </ul>
+            <!--<div  id="login">登录</div>-->
+            <!-- 右侧：用户 -->
+            <ul class="navbar-nav">
+                {if $Request.session.userloginInfo}
+                <li class="nav-item">
+
+                        <span class="nav-link" >
+                            欢迎你：<a style="color: rgba(255, 255, 255, 0.5);" href="{:url('index/People/updateDate',['id'=>$Request.session.userloginInfo.id])}">{$Request.session.userloginInfo.nickname}</a>
+                        </span>
+
+
+                </li>
+                <li class="nav-item">
+                    <a rel="nofollow" class="nav-link" href="{:url('index/Sign/logout')}">
+                        退出登录
+                    </a>
+                </li>
+                {else/}
+                <li class="nav-item hidden-lg">
+                    <a class="nav-link" href=""><i class="icon-search"></i> 搜索</a>
+                </li>
+                <li class="nav-item" id="login">
+                    <a rel="nofollow" class="nav-link" href="#">
+                        <i class="icon-user" ></i>
+                        登录
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a rel="nofollow" id="father" class="nav-link" href="#">
+                        注册
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+{block name='main'}{/block}
+
+
+
+
+
+
+
+
+
+
+
+<footer class="text-muted small bg-dark py-4 mt-3" id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col text-right">
+
+                豫ICP备15013988号
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script src="/static/xuebutingcssandjs/js/hm.js"></script>
+<script src="/static/xuebutingcssandjs/js/bbs.js"></script>
+<script src="/static/xuebutingcssandjs/js/jquery-3.1.0.js"></script>
+<script src="/static/xuebutingcssandjs/js/popper.js"></script>
+<script src="/static/xuebutingcssandjs/js/bootstrap.js"></script>
+<script src="/static/xuebutingcssandjs/js/xiuno.js"></script>
+<script src="/static/xuebutingcssandjs/js/bootstrap-plugin.js"></script>
+<script src="/static/xuebutingcssandjs/js/async.js"></script>
+<script src="/static/xuebutingcssandjs/js/form.js"></script>
+{block name='script'}{/block}
+<!--<script>-->
+    <!--var debug = DEBUG = 0;-->
+    <!--var url_rewrite_on = 1;-->
+    <!--var forumarr = {-->
+        <!--"1": "闲聊",-->
+        <!--"2": "PHP",-->
+        <!--"3": "Java",-->
+        <!--"4": "Python",-->
+        <!--"5": "前端",-->
+        <!--"8": "UI",-->
+        <!--"11": "服务器",-->
+        <!--"13": "数据库",-->
+        <!--"9": "相亲",-->
+        <!--"10": "求职招聘"-->
+    <!--};-->
+    <!--var fid = 0;-->
+    <!--var uid = 0;-->
+    <!--var gid = 0;-->
+    <!--xn.options.water_image_url = 'view/img/water-small.png';	// 水印图片 / watermark image-->
+<!--</script>-->
+<script src="/static/xuebutingcssandjs/js/bbs(1).js"></script>
+<script src="/static/xuebutingcssandjs/js/flowchart.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/jquery.flowchart.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/marked.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/prettify.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/raphael.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/underscore.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/xss.min.js"></script>
+<script src="/static/xuebutingcssandjs/js/editormd.min.js"></script>
+<script src="/static/ui/library/layer/layer/layer.js"></script>
+
+<script>
+
+
+     $('#login').click(function () {
+         layer.open({
+             type: 2,
+             // title: '上传图片',
+             shadeClose: true,
+             shade: false,
+             maxmin: true, //开启最大化最小化按钮
+             area: ['400px', '600px'],
+             content: '{:url("index/Sign/in")}'
+         });
+
+
+     });
+
+     $('#father').click(function () {
+         layer.open({
+             type: 2,
+             // title: '上传图片',
+             shadeClose: true,
+             shade: false,
+             maxmin: true, //开启最大化最小化按钮
+             area: ['400px', '600px'],
+             content: '{:url("index/Sign/up")}'
+         });
+
+
+     });
+
+
+     // $('#login').on('click', function(){
+     //     layer.open({
+     //         type: 2,
+     //         title: '用户登录',
+     //         maxmin: true,
+     //         skin: 'layui-layer-lan',
+     //         shadeClose: true, //点击遮罩关闭层
+     //         area : ['400px' , '280px'],
+     //         content:'{:url("index/Sign/in")}'//弹框显示的url
+     //     });
+
+
+
+    // var initEditor;
+    // $(function () {
+    //     initEditor = editormd("editormd", {
+    //         width: "100%",
+    //         height: 640,
+    //         syncScrolling: "single",
+    //         path: "plugin/gmchina_xiuno_editormd/editormd/lib/",
+    //         imageUpload: true,
+    //         imageFormats: ['jpg', 'png', 'bmp', 'jpeg', 'gif', 'webp'],
+    //         imageUploadURL: "plugin/gmchina_xiuno_editormd/upload/local/upload.php",
+    //         crossDomainUpload: false,
+    //         autoHeight: false,
+    //         readOnly: false,
+    //         codeFold: false,
+    //         taskList: false,
+    //         atLink: false,
+    //         emailLink: false,
+    //         tex: false,
+    //         flowChart: false,
+    //         sequenceDiagram: false,
+    //         pageBreak: false
+    //     });
+    // });
+</script>
+<script>
+    // 版主管理：精华
+    /*
+    $('.mod-button button.digest').on('click', function() {
+        var modtid = $('input[name="modtid"]').checked();
+        if(modtid.length == 0) return $.alert(lang.please_choose_thread);
+        var radios = xn.form_radio('digest', {"0": "取消精华", "1": "一级精华","2": "二级精华", "3": "三级精华"});
+        $.confirm("设置主题为精华", function() {
+            var tids = xn.implode('_', modtid);
+            var digest = $('input[name="digest"]').checked();
+            var postdata = {digest: digest};
+            $.xpost(xn.url('mod-digest-'+tids), postdata, function(code, message) {
+                if(code != 0) return $.alert(message);
+                $.alert(message).delay(1000).location('');
+            });
+        }, {'body': '<p>'+"精华等级"+'：'+radios+'</p>'});
+    })*/
+</script>
+
+
+<!--<div id="scroll_to_top" class="d-fixed"-->
+     <!--style="position: fixed; _position: absolute; bottom: 80px; right: 10px; width: 70px; height: 70px; display: none;">-->
+    <!--<a href="javascript:void(0);"-->
+       <!--style="width: 70px; height: 70px; display: inline-block; background: url(plugin/xn_top/scroll_top.png) no-repeat; outline: none;"-->
+       <!--title="返回顶部"></a>-->
+<!--</div>-->
+
+<!--<script>-->
+    <!--// 返回顶部-->
+    <!--var jscroll_to_top = $('#scroll_to_top');-->
+    <!--$(window).scroll(function () {-->
+        <!--if ($(window).scrollTop() >= 500) {-->
+            <!--jscroll_to_top.fadeIn(300);-->
+        <!--} else {-->
+            <!--jscroll_to_top.fadeOut(300);-->
+        <!--}-->
+    <!--});-->
+
+    <!--jscroll_to_top.on('click', function () {-->
+        <!--$('html,body').animate({scrollTop: '0px'}, 100);-->
+    <!--});-->
+<!--</script>-->
+<!--<script>-->
+    <!--var _hmt = _hmt || [];-->
+    <!--(function () {-->
+        <!--var hm = document.createElement("script");-->
+        <!--hm.src = "https://hm.baidu.com/hm.js?8decc8da034947be30b3c68c6a285254";-->
+        <!--var s = document.getElementsByTagName("script")[0];-->
+        <!--s.parentNode.insertBefore(hm, s);-->
+    <!--})();-->
+<!--</script>-->
+
+
+<!--<script>-->
+    <!--$('li[data-active="fid-0"]').addClass('active');-->
+<!--</script>-->
+
+<!--<script>-->
+    <!--jsearch_form = $('#search_form');-->
+    <!--jsearch_form.on('submit', function () {-->
+        <!--var keyword = jsearch_form.find('input[name="keyword"]').val();-->
+        <!--var url = xn.url('search-' + xn.urlencode(keyword));-->
+        <!--window.location = url;-->
+        <!--return false;-->
+    <!--});-->
+<!--</script>-->
+</body>
+</html>

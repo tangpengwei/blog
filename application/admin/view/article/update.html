@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加文章</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    {include file='common/css'}
+    <link href="/static/ui/library/um/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="container wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加文章<small></small></h5>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" action="" id="form" class="form-horizontal">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标题</label>
+                            <div class="col-sm-10">
+                                <input autocomplete="off" type="text" value="{$list->title}" name="title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">分类</label>-->
+                            <!--<div class="col-sm-2">-->
+                                <!--<select class="form-control m-b category" name="category_id">-->
+                                    <!--<option value="0">请选择分类</option>-->
+
+                                    <!--<option value=""></option>-->
+
+                                <!--</select>-->
+                            <!--</div>-->
+
+
+                        <!--</div>-->
+                        <div class="hr-line-dashed"></div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">内容</label>
+                            <div class="col-sm-10">
+                                <textarea  name="content" style="height: 300px;" id="editor1" class="form-control">{$list->content}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">署名</label>
+                            <div class="col-sm-10">
+                                <input autocomplete="off" value="{$list->author}" type="text" name="author" class="form-control">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-2 control-label">状态</label>-->
+                            <!--<div class="col-sm-10">-->
+
+                                <!--<input autocomplete="off" type="radio" value="1" name="status"> 已发布-->
+
+                                <!--<input autocomplete="off" type="radio" value="0" checked name="status"> 未发布-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" id="btn" type="submit">确认修改</button>
+                                <!--<button class="btn btn-white" onclick="history.back(-1);" type="button">返回上一页</button>-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file='common/js'}
+<script src="/static/ui/library/um/umeditor.config.js"></script>
+<script src="/static/ui/library/um/umeditor.js"></script>
+<script>
+    var ue = UM.getEditor('editor1');
+</script>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+{extend name="zzz/zzz" /}
+{block name='css'}
+<style>
+    #page ul{
+        width: 100px;
+        margin:auto;
+        text-align: center;
+    }
+    #page li{
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+    }
+    #page a{
+        display: block;
+        width: 20px;
+        height: 20px;
+    }
+    #page span{
+        width: 20px;
+        height: 20px;
+        background-color: red;
+    }
+
+</style>
+{/block}
+
+{block name='main'}
+
+<main id="body">
+    <div class="container">
+
+
+        <div class="row">
+            <div class="col-lg-9 main">
+
+                <div class="card card-threadlist">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="">最新</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link  " href="{:url('index/Index/scene')}">精华</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled threadlist mb-0">
+                            {foreach $list as $v}
+                            <li class="media thread tap top_3 " data-href="thread-1.htm" data-tid="1">
+
+                                <a rel="nofollow"  href="{:url('index/Index/centent',['id'=>$v['id']])}" tabindex="-1" class="ml-1 mt-1 mr-3">
+                                   {if $v.minthumb}
+                                    <img class="avatar-3" src="/{$v.minthumb}">
+                                    {else/}<img src="/static/image/lz.jpg" alt="" style="width: 34px;height: 34px">
+                                    {/if}
+                                </a>
+
+
+                                <div class="media-body">
+                                    <div class="subject break-all">
+
+
+                                        <i class="icon-top-3"></i>
+
+
+                                        <a  href="{:url('index/Index/centent',['id'=>$v['id']])}">{$v.title}</a>
+
+
+                                    </div>
+                                    <div class="d-flex justify-content-between small mt-1">
+                                        <div>
+
+                                            <span class="username text-grey mr-1  hidden-sm" uid="1">{$v.author}</span>
+                                            <span class="date text-grey hidden-sm">{$v.create_time|date='Y-m-d'}</span>
+
+
+                                            <!--<span>-->
+                                            <!--<span class="text-grey mx-2">←</span>-->
+                                            <!--<span class="username text-grey mr-1" uid="1">shusheng</span>-->
+                                            <!--<span class="text-grey">1月前</span>-->
+                                            <!--</span>-->
+
+                                        </div>
+                                        <div class="text-muted small">
+
+                                            <span class="ml-2 d-none"><i class="icon-eye"></i> 488</span>
+
+
+                                            <!--<span class="ml-2"><i class="icon-comment-o"></i> 17</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {/foreach}
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="page">
+                    {$list|raw}
+                </div>
+
+
+            </div>
+            <div class="col-lg-3 d-none d-lg-block aside">
+                <a role="button" class="btn btn-primary btn-block mb-3" href="{:url('index/Article/add')}">发布新主题</a>
+
+                <div class="card card-site-info">
+
+                    <div class="m-3">
+                        <h5 class="text-center">编程·学不停</h5>
+                        <div class="small line-height-3">想起那年夕阳下的奔跑！那是我逝去的青春！</div>
+                    </div>
+                    <div class="card-footer p-2">
+                        <table class="w-100 small">
+                            <tbody>
+                            <tr align="center">
+                                <td>
+                                    <span class="text-muted">主题数</span><br>
+                                    <b>无</b>
+                                </td>
+                                <td>
+                                    <span class="text-muted">本站总帖子数</span><br>
+                                    <b>{$list1}</b>
+                                </td>
+                                <!--<td>
+                                    <span class="text-muted">用户数</span><br>
+                                    <b>54</b>
+                                </td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <form action="/index/Index/search.html" method="post">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="关键词" name="wd">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        小黑板
+                    </div>
+                        <div class="card-footer">
+                               <span>我爱学习<br>学习使我快乐</span>
+                        </div>
+                </div>
+
+                <div class="card friendlink">
+                    <div class="card-header">友情链接</div>
+                    <div class="card-body small">
+                        <ul>
+                            <li class="mb-1 small line-height-2">
+                                <a href="https://www.baidu.com/" target="_blank">
+                                    百度助你走向人生巅峰
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+{/block}

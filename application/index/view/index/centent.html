@@ -1,0 +1,322 @@
+{extend name="zzz/zzz" /}
+
+{block name='main'}
+<main id="body">
+    <div class="container">
+
+
+        <link rel="stylesheet" href="/static/xuebutingcssandjs/css/rainbow.min.css">
+        <link href="/static/ui/library/um/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+        <script src="/static/xuebutingcssandjs/js/hm.js"></script>
+        <script src="/static/xuebutingcssandjs/js/highlight.min.js"></script>
+        <div class="row">
+            <div class="col-lg-9 main">
+
+                <ol class="breadcrumb d-none d-md-flex">
+                    <li class="breadcrumb-item"><a rel="nofollow" href="{:url('index/Index/index')}" aria-label="首页"><i
+                            class="icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a rel="nofollow" href="">闲聊</a></li>
+                    <li class="breadcrumb-item active"><a rel="nofollow" href=""
+                                                          title="首页返回主题第一页">{$list[0]['title']}</a></li>
+
+                </ol>
+
+
+                <div class="card card-thread">
+                    <div class="card-body">
+                        <div class="media">
+                            <a rel="nofollow" href="" tabindex="-1">
+                                {if $list[0]['minthumb']}
+                                <img class="avatar-3" src="/{$list[0]['minthumb']}">
+                                {else/}<img src="/static/image/lz.jpg" alt="" style="width: 34px;height: 34px">
+                                {/if}
+                            </a>
+                            <div class="media-body">
+
+                                <h4 class="break-all">
+
+                                    {$list[0]['title']}
+
+                                </h4>
+
+                                <div class="d-flex justify-content-between small">
+                                    <div>
+
+								<span class="username">
+									<a rel="nofollow" href=""
+                                       class="text-muted font-weight-bold">{$list[0]['author']}</a>
+								</span>
+                                        <span class="date text-grey ml-2">{$list[0]['create_time']}</span>
+                                        <span class="text-grey ml-2"><i class="icon-eye"></i> 490</span>
+
+                                    </div>
+                                    <div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="message break-all" isfirst="1">
+                                {$list[0]['content']|raw}
+                            <div class="text-right text-muted my-3 small font-italic">
+                                发布于 <span class="icon-clock-o ml-2"> </span>{$list[0]['create_time']}
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="plugin d-flex justify-content-center mt-3">
+
+                            <style>
+                                .haya-favoriter {
+                                    position: relative;
+                                }
+
+                                .haya-favorite-show-users {
+                                    position: absolute;
+                                    top: 5px;
+                                    z-index: 100;
+                                    width: 100%;
+                                }
+
+                                .haya-favorite-show-users .haya-favorite-users {
+                                    max-height: 250px;
+                                    overflow-y: auto;
+                                }
+                            </style>
+
+                            <div class="haya-favoriter px-2">
+	<span class="btn-group haya-favoriter-info" role="group">
+					<button class="btn btn-outline-secondary js-haya-favorite-tip" data-tid="1" title="收藏本帖">
+				<i class="icon icon-star-o" aria-label="收藏本帖"></i>
+				<span class="haya-favorite-btn">收藏</span>
+			</button>
+
+		<button class="btn btn-outline-secondary js-haya-favorite-show-users" data-tid="1" title="点击查看收藏详情">
+			<span class="haya-favorite-user-count">1</span>
+		</button>
+	</span>
+                            </div>
+
+
+                        </div>
+                        <div class="haya-favoriter">
+                            <div class="text-center d-none haya-favorite-show-users">
+                                <div class="text-left m-0 p-0 col-md-6 mx-auto">
+                                    <div class="modal-content">
+                                        <div class="modal-header small">
+                                            <b>收藏的用户（<span class="haya-favorite-user-count">1</span>）</b>
+
+                                            <span class="close small p-3 haya-favorite-close js-haya-favorite-show-users"
+                                                  data-dismiss="dodal">X</span>
+                                        </div>
+
+                                        <div class="modal-body p-3">
+                                            <div class="text-muted haya-favorite-users small break-all">
+                                                <div class="text-muted">正在加载信息~</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="card card-postlist">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <b>最新回复</b>
+                                </div>
+
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-unstyled postlist">
+
+                            {foreach $info as $v}
+                            <li class="media post" data-pid="7" data-uid="19">
+                                <a rel="nofollow" href="http://xuebuting.com/user-19.htm" class="mr-3" tabindex="-1">
+                                    {if $v.author.avatar}
+                                    <img class="avatar-3" src="/{$v.author.avatar}">
+                                    {else/} <img class="avatar-3" src="/static/image/lz.jpg" alt="">
+                                    {/if}
+                                </a>
+
+                                <div class="media-body">
+                                    <div class="d-flex justify-content-between small text-muted">
+                                        <div>
+
+									<span class="username">
+										<a href="" class="text-muted font-weight-bold">{$v.author.nickname}</a>
+									</span>
+
+
+                                            <span class="date text-grey ml-2">{$v.create_time}</span>
+                                            &nbsp;&nbsp;&nbsp; <i class="fa fa-thumbs-up">赞</i>
+                                        </div>
+                                        <!--<div class="text-right text-grey">-->
+
+                                            <!--<a href="javascript:void(0)" data-tid="1" data-pid="7"-->
+                                               <!--class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i>-->
+                                                <!--<span class="d-none">引用</span></a>-->
+
+
+                                            <!--<span class="floor-parent">-->
+										<!--<span class="floor mr-0">2</span>楼									</span>-->
+
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="message mt-1 break-all">
+
+
+                                        {$v.content|raw}
+
+
+
+                                    </div>
+                                </div>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+
+                    {if $Request.session.userloginInfo}
+
+                    <form action="{:url('index/Index/add_interview')}" method="post">
+                        <div class="form-group">
+                            <div>
+                                <textarea rows="16" name="content" style="height: 200px;" id="editor1" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" name="id" value="{$list[0]['id']}">
+                                <button class="btn btn-primary btn-xs" type="submit">确认添加</button>
+                            </div>
+                        </div>
+                    </form>
+                    {/if}
+
+
+
+
+                </div>
+
+
+                <div class="d-none threadlist"><input type="checkbox" name="modtid" value="1" checked=""></div>
+
+
+                <a rel="nofollow" role="button" class="btn btn-secondary btn-block xn-back col-lg-6 mx-auto mb-3"
+                   href="javascript:history.back();">返回</a>
+
+            </div>
+            <div class="col-lg-3 d-none d-lg-block aside">
+
+                <a rel="nofollow" role="button" class="btn btn-primary btn-block mb-3"
+                   href="{:url('index/Article/add',['id'=>$list[0]['id']])}">发布新主题</a>
+
+                <div class="card card-user-info">
+                    <div class="m-3 text-center">
+                        <a rel="nofollow" href="http://xuebuting.com/user-1.htm" tabindex="-1">
+                            {if $Request.session.userloginInfo.avatar}
+                            <img class="avatar-3" src="/{$Request.session.userloginInfo.avatar}">
+                            {else/}<img src="/static/image/hy.jpg" alt="" style="width: 34px;height: 34px">
+                            {/if}
+
+                        </a>
+                        <h5><a rel="nofollow" href="">{$Request.session.userloginInfo.nickname}</a></h5>
+
+                    </div>
+                    <div class="card-footer p-2">
+                        <table class="w-100 small">
+                            <tbody>
+                            <tr align="center">
+                                <td>
+                                    <span class="text-muted">主题数</span><br>
+                                    <b>待更新</b>
+                                </td>
+
+                                <td>
+                                    <span class="text-muted">帖子数</span><br>
+                                    <b>{$count}</b>
+                                </td>
+                                <td>
+                                    <span class="text-muted">精华数</span><br>
+                                    <b>待更新</b>
+                                </td>
+                                <td>
+                                    <span class="text-muted">注册排名</span><br>
+                                    <b>待更新</b>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <form action="http://xuebuting.com/search.htm" id="search_form">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="关键词" name="keyword">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title">作者最近主题：</h6>
+                        <ul class="small break-all">
+                            <li class="line-height-2">
+                                <a href="">
+                                    无 </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</main>
+
+
+<footer class="text-muted small bg-dark py-4 mt-3" id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+
+            </div>
+            <div class="col text-right">
+
+                豫ICP备15013988号
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+{/block}
+
+{block name='script'}
+<script src="/static/ui/library/um/umeditor.config.js"></script>
+<script src="/static/ui/library/um/umeditor.js"></script>
+<script>
+    var ue = UM.getEditor('editor1');
+</script>
+
+{/block}

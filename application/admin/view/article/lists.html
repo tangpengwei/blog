@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加分类</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    {include file='common/css'}
+
+</head>
+
+<body class="gray-bg">
+<div class="container wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>封面图</th>
+                        <th>文章标题</th>
+                        <th>所属分类</th>
+                        <th>文章状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {foreach $list as $v}
+
+                    <tr>
+                        <td>{$v.id}</td>
+                        <td>
+                            {if $v.minthumb}
+                            <img src="/{$v.minthumb}" alt="">
+                            {else/}
+                            <span>封面暂无</span>
+                            {/if}
+                        </td>
+                        <td>{$v.title}</td>
+                        <td>{$v.category.name}</td>
+                        <td>
+                            {if $v.status}
+                            <span id="span">已发布</span>
+                            <button data-id="{$v.id}" class="btn btn-warning status btn-xs" id="status">下线</button>
+                            {else/}
+                            <span>未发布</span>
+                            <button data-id="{$v.id}" class="btn btn-primary status btn-xs">上线</button>
+                            {/if}
+
+                        </td>
+                        <td>
+                            <button type="button" id="del" data-del-id="{$v.id}" class="btn btn-white">删除</button>
+                            <!--<a href="" id="del" data-del-id="{$v.id}">删除</a>-->
+                            <a href="{:url('admin/Article/update',['id'=>$v['id']])}" id="update" data-update-id="{$v.id}" class="btn btn-white">修改</a>
+                            <!--<button type="button" id="update" data-update-id="{$v.id}" class="btn btn-white">修改</button>-->
+                        </td>
+                    </tr>
+
+                    {/foreach}
+
+                    </tbody>
+                </table>
+
+                {$list|raw}
+
+            </div>
+            <button class="btn btn-white" onclick="history.back(-1);" type="button">返回上一页</button>
+            <a href="{:url('admin/Article/add')}"  class="btn btn-white">返回文章添加列表</a>
+        </div>
+    </div>
+</div>
+
+{include file='common/js'}
+
+</body>
+
+<script>
+    //使用jQuery获取一个点击事件
+$('.status').click(function () {
+    var i =$(this);
+    //通过ajax的post方法传到服务端
+   $.post('{:url("admin/Article/changeStatus")}',{id:i.attr('data-id')},function (e) {
+            console.log(e);
+       //如果返回的没有有值的话
+            if (!e.code){
+                //弹出一个报警框 并且把报警信息弹出来
+                layer.alert(e.msg())
+            }else {
+                //返回的有值得话 判断状态 如果是1 说明是发布状态 修改前端页面的状态
+                if (e.data){
+                    //修改后已经处于发布状态
+                    i.prev().html('已发布');
+                    i.html('下线').removeClass('btn-primary').addClass('btn-warning');
+                } else  {
+                    i.prev().html('未发布');
+                    i.html('上线').removeClass('btn-warning').addClass('btn-primary');
+                }
+            }
+
+   })
+
+
+})
+
+$('td').on('click','#del',function () {
+    if (!confirm('您确认删除吗？')) {
+        return false;
+    }
+    var i = $(this);
+    $.post('{:url("admin/Article/del")}',{id:i.attr('data-del-id')},function (e) {
+        console.log(e);
+        alert(e.msg);
+        i.parent().parent().remove();
+    })
+})
+
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
