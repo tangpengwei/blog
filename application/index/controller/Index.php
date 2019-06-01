@@ -47,6 +47,16 @@ class Index extends Controller
 
         $info =  Interview::with('author')->where('company_id',$id)->paginate(10);
         $this->assign('info',$info);
+
+
+//        $huifu = interview::where()->select();
+
+        if (session('userloginInfo')){
+            $id1 = session('userloginInfo')->id;
+            $use = user::where('id',$id1)->find();
+            $this->assign('use',$use);
+        }
+
         return $this->fetch();
     }
 
@@ -119,8 +129,9 @@ class Index extends Controller
             $data['uid'] = $user->id;
             //记录添加时间
             $data['create_time'] = date('Y-m-d H:i:s');
+            $data['path']="0-";
             if (\think\Db::table('interview')->data($data)->insert()){
-                $this->success('添加成功');
+                $this->success('添加成功','',$data['content']);
             }else{
                 $this->error('添加失败');
             }
@@ -200,8 +211,42 @@ class Index extends Controller
     }
 
 
+    
+    
+    /**
+     * 处理回复
+     */
+    public function comments()
+    {
+        $id = $this->request->param('id');
+        $info = interview::where('id',$id)->find();
+        $content = $this->request->only(['data']);
+       $a = interview::create([
+            'content'=>$content['data'],
+            'path' => $info->path.$id.'-'
+        ]);
+        if ($a){
+            $this->success('成功','',$content['data']);
+        }else{
+            $this->error('失败');
+        }
+    }
 
 
 
 
+    /**
+     * 显示回复
+     */
+    public function huifu()
+    {
+        $id = $this->request->param('id');
+       $huifu = interview::where('path','like','0-'.$id.'-')->select();
+       $a = [];
+       foreach ($huifu as $v){
+           $a[]=$v['content'];
+       }
+        return $a;
+
+    }
 }

@@ -145,64 +145,60 @@
 
                             {foreach $info as $v}
                             <li class="media post" data-pid="7" data-uid="19">
-                                <a rel="nofollow" href="http://xuebuting.com/user-19.htm" class="mr-3" tabindex="-1">
+                                <a rel="nofollow" href="" class="mr-3" tabindex="-1">
                                     {if $v.author.avatar}
                                     <img class="avatar-3" src="/{$v.author.avatar}">
                                     {else/} <img class="avatar-3" src="/static/image/lz.jpg" alt="">
                                     {/if}
                                 </a>
-
                                 <div class="media-body">
                                     <div class="d-flex justify-content-between small text-muted">
                                         <div>
-
 									<span class="username">
 										<a href="" class="text-muted font-weight-bold">{$v.author.nickname}</a>
 									</span>
-
-
                                             <span class="date text-grey ml-2">{$v.create_time}</span>
-
-
                                             <div class="actions">
                                                 <a data-id="{$v.id}" class="btn btn-xs ding {if ($v['ding'])} btn-warning {else/} btn-white {/if}"><i class="fa fa-thumbs-up"></i> 赞 </a>
                                                 <span>{$v.ding}</span>
                                             </div>
-
-
-
-
-
                                         </div>
-                                        <!--<div class="text-right text-grey">-->
+                                        <div class="text-right text-grey">
+                                            <a href="javascript:void(0)" data-tid="1" data-pid="7"
+                                               class="text-grey  mr-3">
 
-                                            <!--<a href="javascript:void(0)" data-tid="1" data-pid="7"-->
-                                               <!--class="text-grey post_reply mr-3"><i class="icon-reply" title="引用"></i>-->
-                                                <!--<span class="d-none">引用</span></a>-->
+                                                <i class="icon-reply" id="click" title="引用">
+                                                </i>
+
+                                                <input type="hidden" id="pid" value="{$v.id}">
+                                                <form action="{:url('index/Index/comments')}" method="post" id="form" style="display: none">
+                                                    <input type="text" name="huifu" id="huifu">
+                                                    <button type="button" id="but">回复</button>
+                                                </form>
 
 
+
+
+                                                <span class="d-none">引用</span>
+                                            </a>
                                             <!--<span class="floor-parent">-->
 										<!--<span class="floor mr-0">2</span>楼									</span>-->
-
-                                        <!--</div>-->
+                                        </div>
                                     </div>
                                     <div class="message mt-1 break-all">
-
-
                                         {$v.content|raw}
-
-
-
                                     </div>
+                                    <button type="button" id="pinglun" value="{$v.id}">点击查看所有评论</button>
                                 </div>
                             </li>
                             {/foreach}
                         </ul>
+                        {$info|raw}
                     </div>
 
                     {if $Request.session.userloginInfo}
 
-                    <form action="{:url('index/Index/add_interview')}" method="post">
+                    <form action="" method="">
                         <div class="form-group">
                             <div>
                                 <textarea rows="16" name="content" style="height: 200px;" id="editor1" class="form-control"></textarea>
@@ -210,8 +206,8 @@
                         </div>
                         <div class="form-group">
                             <div>
-                                <input type="hidden" name="id" value="{$list[0]['id']}">
-                                <button class="btn btn-primary btn-xs" type="submit">确认添加</button>
+                                <input type="hidden" name="id" id="idVal" value="{$list[0]['id']}">
+                                <button class="btn btn-primary btn-xs" id="btn-primary" type="button">确认添加</button>
                             </div>
                         </div>
                     </form>
@@ -236,17 +232,20 @@
                    href="{:url('index/Article/add',['id'=>$list[0]['id']])}">发布新主题</a>
 
                 <div class="card card-user-info">
+                    {if $Request.session.userloginInfo}
                     <div class="m-3 text-center">
-                        <a rel="nofollow" href="http://xuebuting.com/user-1.htm" tabindex="-1">
-                            {if $Request.session.userloginInfo.avatar}
-                            <img class="avatar-3" src="/{$Request.session.userloginInfo.avatar}">
-                            {else/}<img src="/static/image/hy.jpg" alt="" style="width: 34px;height: 34px">
+                        <a rel="nofollow" href="" tabindex="-1">
+                            {if $use->avatar}
+                            <img class="avatar-3" src="/{$use->avatar}">
+                            {else/}<img src="/static/image/lz.jpg" alt="" style="width: 34px;height: 34px">
                             {/if}
 
                         </a>
                         <h5><a rel="nofollow" href="">{$Request.session.userloginInfo.nickname}</a></h5>
 
                     </div>
+                    {else/}无
+                    {/if}
                     <div class="card-footer p-2">
                         <table class="w-100 small">
                             <tbody>
@@ -305,21 +304,6 @@
 </main>
 
 
-<footer class="text-muted small bg-dark py-4 mt-3" id="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-
-            </div>
-            <div class="col text-right">
-
-                豫ICP备15013988号
-            </div>
-        </div>
-    </div>
-</footer>
-
-
 {/block}
 
 {block name='script'}
@@ -329,7 +313,53 @@
     var ue = UM.getEditor('editor1');
 
 
+$('#btn-primary').click(function () {
+    var data = $('#editor1').val();
+    var id = $('#idVal').val();
+    var i = $(this);
+    console.log(id);
+    $.post('{:url("index/Index/add_interview")}',{id:id,content:data},function (e) {
+       if (e.code){
+          $('.list-unstyled').append("   <li class=\"media post\" data-pid=\"7\" data-uid=\"19\">\n" +
+              "                                <a rel=\"nofollow\" href=\"\" class=\"mr-3\" tabindex=\"-1\">\n" +
+              "                                    {if $Request.session.userloginInfo.avatar}\n" +
+              "                                    <img class=\"avatar-3\" src=\"/{$Request.session.userloginInfo.avatar}\">\n" +
+              "                                    {else/} <img class=\"avatar-3\" src=\"/static/image/lz.jpg\" alt=\"\">\n" +
+              "                                    {/if}\n" +
+              "                                </a>\n" +
+              "                                <div class=\"media-body\">\n" +
+              "                                    <div class=\"d-flex justify-content-between small text-muted\">\n" +
+              "                                        <div>\n" +
+              "\t\t\t\t\t\t\t\t\t<span class=\"username\">\n" +
+              "\t\t\t\t\t\t\t\t\t\t<a href=\"\" class=\"text-muted font-weight-bold\">{$Request.session.userloginInfo.nickname}</a>\n" +
+              "\t\t\t\t\t\t\t\t\t</span>\n" +
+              "                                            <span class=\"date text-grey ml-2\"></span>\n" +
+              "                                            <div class=\"actions\">\n" +
+              "                                                <a data-id=\"{$v.id}\" class=\"btn btn-xs ding  btn-white \"><i class=\"fa fa-thumbs-up\"></i> 赞 </a>\n" +
+              "                                                <span>0</span>\n" +
+              "                                            </div>\n" +
+              "                                        </div>\n" +
+              "                                        <div class=\"text-right text-grey\">\n" +
+              "                                            <a href=\"javascript:void(0)\" data-tid=\"1\" data-pid=\"7\"\n" +
+              "                                               class=\"text-grey  mr-3\" id=\"click\"><i class=\"icon-reply\" title=\"引用\"></i>\n" +
+              "                                                <span class=\"d-none\">引用</span></a>\n" +
+              "                                        </div>\n" +
+              "                                    </div>\n" +
+              "                                    <div class=\"message mt-1 break-all\">\n" +
+             e.data+
+              "                                    </div>\n" +
+              "                                </div>\n" +
+              "                            </li>");
 
+
+       }else {
+           alert(e.msg);
+       }
+    })
+
+
+
+})
 
 
 
@@ -362,6 +392,39 @@
 
 
 
+    $('body').on('click', '#click', function() {
+        var i =$(this);
+        i.next().next().toggle();
+    })
+
+
+    $('body').on('click', '#but', function() {
+        var i = $(this);
+        var id = i.parent().prev().val();
+        var data = i.prev().val();
+        console.log(i.parent().parent().parent().parent().end());
+        $.post('{:url("index/Index/comments")}',{data:data,id:id},function (e) {
+            // console.log(e);
+
+            i.parent().parent().parent().parent().next().append("<div>&nbsp&nbsp&nbsp"+e.data+"</div>");
+            i.parent().css('display','none');
+        })
+    })
+
+
+
+
+    $('body').on('click', '#pinglun', function() {
+        var a = $(this);
+       var id = a.val();
+        $.post('{:url("index/Index/huifu")}',{id:id},function (e) {
+            for (var i=0;i<e.length;i++){
+
+                a.prev().append("<div>&nbsp&nbsp&nbsp"+e[i]+"</div>");
+            }
+        })
+
+    })
 
 
 
